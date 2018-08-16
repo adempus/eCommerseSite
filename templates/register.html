@@ -47,28 +47,37 @@
                         <div class="form-row">
                             <div class="form-group col-md">
                                 <label for="countryInput">Country</label>
-                                <select id="countryInput" class="form-control" name="country_select">
-                                    <option selected name="country_selection">Choose...</option>
+                                <select id="countryInput" class="form-control" name="country_select" type="submit">
+                                    <option selected name="country_selection" type="submit" id="selected_country">Choose...</option>
                                     {% for opt in country_select %}
                                         <option name="{{ opt }}">{{ opt }}</option>
                                     {% endfor %}
                                 </select>
+                                <script type="text/javascript">
+                                   $(function () {
+                                        $('select#countryInput').bind('click', function () {
+                                            let resp = $.post("/fillStateDropdown", { country: $(this).val() });
+                                            console.log(resp);
+                                            return resp;
+                                        });
+                                    });
+                                </script>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="cityInput">City</label>
-                                <input type="text" class="form-control" id="cityInput" name="city"
-                                       placeholder="New York">
+                                <select id="cityInput" class="form-control" name="city_select">
+                                    <option selected name="city_selection">Choose city...</option>
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="stateInput">State</label>
-                                <select id="stateInput" class="form-control">
-                                    {% if country_selection is defined %}
-                                        value: {{ country_selection }}
-                                    {% endif %}
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
+                                <select id="stateInput" class="form-control" name="state_select">
+                                    <option selected name="state_selection">Choose...</option>
+                                        {% for opt in state_select %}
+                                            <option name="{{ opt }}">{{ opt }}</option>
+                                        {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group col-md-2">

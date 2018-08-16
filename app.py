@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 # from data import ShopDAO, LocationDAO
 from data import LocationDAO
 from models import Model
+from json import dumps
 
 app = Flask(__name__)
 shopDAO = object
@@ -18,8 +19,6 @@ def register():
     # data to post from registration form
     signUp()
     countries = locationDAO.countriesList()
-    countrySelect = request.form.get('country_select')
-    print(countrySelect)
     return render_template('register.html', country_select=countries)
 
 
@@ -39,8 +38,20 @@ def signIn():
 
 
 def initDAO():
-    #shopDAO = ShopDAO()
+    # shopDAO = ShopDAO()
     locationDAO = LocationDAO()
+
+
+@app.route('/fillStateDropdown', methods=['GET', 'POST'])
+def fillStateDropdown():
+    country = request.form['country']
+    states = { 'states' : locationDAO.statesList(country) }
+    print(states)
+    return jsonify(states)
+
+@app.route('/fillCityDropdown')
+def fillCityDropdown():
+    pass
 
 if __name__ == '__main__':
     app.run()

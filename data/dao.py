@@ -1,11 +1,11 @@
 import requests
-import pprint as pp
+from .shopdatabase import ShopDatabase
+
 
 class ShopDAO(object):
     def __init__(self):
-        self._database = ShopDatabase.ShopDBSchema()
+        self._database = ShopDatabase()
         self.status()
-
 
     def addNewUser(self, userModel):
         self._database.Persistence.persistNewUser(userModel)
@@ -33,17 +33,23 @@ class LocationDAO(object):
     def statesList(self, country):
         geonameId = self.getGeonameId(country)
         url = f'{self._allStatesURL}geonameId={geonameId}&username=jmorin722'
-        data = self._getJsonResponse(url)['geonames']
-        return [x['name'] for x in data]
+        gname = self.hasGeoname(self._getJsonResponse(url))
+        if gname: return [x['name'] for x in gname]
+        else:return None
 
     def getGeonameId(self, countryName):
         geonameURL = f'http://api.geonames.org/searchJSON?q={countryName}&maxRows=10&username=jmorin722'
-        data = self._getJsonResponse(geonameURL)['geonames']
-        return [x['geonameId'] for x in data if x['name'] in countryName][0]
+        gname = self.hasGeoname(self._getJsonResponse(geonameURL))
+        if gname: return [x['geonameId'] for x in gname if x['name'] in countryName].pop()
+        else: return None
 
     def citiesList(self, region):
         ''':param region can be a state or some other classification of region. '''
-        pass
+
+    def hasGeoname(self, jsonResponse):
+        # print(jsonResponse)
+        if 'geonames' in jsonResponse:
+            return jsonResponse['geonames']
 
 
 if '__main__'==__name__:
@@ -52,5 +58,4 @@ if '__main__'==__name__:
     # res = locdao.getGeonameId('united states of america')['geonames']
     # target = [x['geonameId'] for x in res if x['name'] in 'United States of America']
     print(locdao.statesList('Canada'))
-
 

@@ -1,6 +1,5 @@
 from flask import request
 import json
-from collections import UserDict
 
 
 class Model(object):
