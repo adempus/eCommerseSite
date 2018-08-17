@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify
-# from data import ShopDAO, LocationDAO
 from data import LocationDAO
 from models import Model
 from json import dumps
@@ -26,7 +25,7 @@ def signUp():
     userModel = Model()
     userModel.setData(from_request=True,
                       first_name='first_name', last_name='last_name', email='email',
-                      password='password', street='street', city='city', state='state',
+                      password='password', street='street', city='city', state_select='state_select',
                       country_select='country_select', zip='zip', apt='apt')
     print(userModel)
 
@@ -42,14 +41,15 @@ def initDAO():
     locationDAO = LocationDAO()
 
 
-@app.route('/fillStateDropdown', methods=['GET', 'POST'])
+@app.route('/fillStateDropdown', methods=['POST'])
 def fillStateDropdown():
     country = request.form['country']
-    states = { 'states' : locationDAO.statesList(country) }
+    states = { 'states': locationDAO.statesList(country) }
     print(states)
+    #return render_template('register.html', state_select=states)
     return jsonify(states)
 
-@app.route('/fillCityDropdown')
+@app.route('/fillCityDropdown', methods=['POST'])
 def fillCityDropdown():
     pass
 
