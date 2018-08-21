@@ -8,10 +8,12 @@ class ShopDAO(object):
         self.status()
 
     def addNewUser(self, userModel):
-        self._database.Persistence.persistNewUser(userModel)
+        # self._database.Persistence.persistNewUser(userModel)
+        pass
 
     def addNewProduct(self, productModel):
-        self._database.Persistence.persistNewProduct(productModel)
+        pass
+        # self._database.Persistence.persistNewProduct(productModel)
 
     def status(self):
         print('Database initiated')

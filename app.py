@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, jsonify
-from data import LocationDAO
+from data import LocationDAO, ShopDAO
 from models import Model
-from json import dumps
+from validator import Validate
 
 app = Flask(__name__)
-shopDAO = object
+shopDAO = ShopDAO()
 locationDAO = LocationDAO()
 
 @app.route('/', methods=['GET', 'POST'])
@@ -25,10 +25,9 @@ def signUp():
     userModel = Model()
     userModel.setData(from_request=True,
                       first_name='first_name', last_name='last_name', email='email',
-                      password='password', street='street', city='city', state_select='state_select',
-                      country_select='country_select', zip='zip', apt='apt')
-    print(userModel)
-
+                      password='password', passwordConfirm='passwordConf', street='street',
+                      city='city', state_select='state_select', country_select='country_select',
+                      zip='zip', apt='apt')
 
 def signIn():
     userEmail = request.form.get('login-email')

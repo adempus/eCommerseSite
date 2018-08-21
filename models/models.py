@@ -17,6 +17,9 @@ class Model(object):
         else:
             self._data = { k: v for k, v in kwargs.items() if not isinstance(v, dict) }
 
+    def getData(self):
+        return self._data
+
     def keys(self):
         for k in self._data.items(): yield k
 

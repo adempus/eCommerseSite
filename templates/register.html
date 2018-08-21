@@ -4,8 +4,8 @@
 {% block body %}
 <div class="container pt-5 pb-5 pl-5 pr-5" id="signup_container">
     {% block content %}
-        <h1 class="text-center mt-4 pt-4 mb-3">{% block label %}Sign-Up{% endblock %}</h1>
-        <div class="card mt-5 ml-5 mr-5"> {#style="margin-left: 15%; margin-right:15%">#}
+        <h1 class="text-center mt-4 pt-4 mb-3 animated fadeInDown">{% block label %}Sign-Up{% endblock %}</h1>
+        <div class="card mt-5 ml-5 mr-5 shadow-lg p-3 mb-5 bg-white rounded animated fadeInUp delay-0.5s">
             {% block signup %}
                 <div class="card-body pl-5 pr-5 pt-5 pb-5">
                     <form action="/register" method="POST">
@@ -22,13 +22,20 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md">
                                 <label for="emailInput">Email</label>
                                 <input type="email" class="form-control" id="emailInput" name="email" placeholder="email@domain.com">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="passInput">Password</label>
                                 <input type="password" class="form-control" id="passInput" name="password"
+                                       placeholder="password">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="passInConfirm">Confirm Password</label>
+                                <input type="password" class="form-control" id="passInConfirm" name="passwordConf"
                                        placeholder="password">
                             </div>
                         </div>
@@ -77,27 +84,10 @@
                                     <option selected name="state_selection" id="selected_state">Choose...</option>
                                         <option>Choose state...</option>
                                 </select>
-                                <script type="text/javascript">
-                                   /* $(function () {
-                                       $('select#stateInput').change(function() {
-                                           $.post('fillCitiesDropdown', {state: $(this).val() }, function(res) {
-                                               let citiesData = res.cities;
-                                               let citiesDropdown = $('select#cityInput');
-                                               citiesDropdown.html("");
-                                               $.each(citiesData, function(k, v) {
-                                                   console.log(v);
-                                                   citiesDropdown.append($('<option></option>').attr('value', v.toString()).text(v.toString()))
-                                               });
-                                           });
-                                       });
-                                    }); */
-                                </script>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="cityInput">City</label>
-                                <select id="cityInput" class="form-control" name="city_select">
-                                    <option selected name="city_selection">Choose city...</option>
-                                </select>
+                                <input type="text" class="form-control" id="cityInput" name="city">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="zipInput">Zip</label>

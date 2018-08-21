@@ -1,6 +1,15 @@
 import sqlite3
 
 class ShopDatabase(object):
+    def __init__(self):
+        self.schema = self.ShopDBSchema()
+
+    def cursor(self):
+        return self.schema.getCursor()
+
+    def connection(self):
+        return self.schema.getConnection()
+
     class ShopDBSchema(object):
         def __init__(self):
             self.__connection = sqlite3.connect('./data/db/shop.db')
@@ -51,43 +60,16 @@ class ShopDatabase(object):
                 price    DOUBLE PRECISION);
             ''')
 
+        def getCursor(self):
+            return self.__cursor
+
+        def getConnection(self):
+            return self.__connection
+
         def __call__(self):
             self.initUsersTable()
             self.initAddressTable()
             self.initCartTable()
             self.initCategoriesTable()
             self.initCatalogTable()
-
-
-    class Persistence(object):
-        def __init__(self):
-            pass
-
-        @staticmethod
-        def persistNewUser(self, **kwargs):
-            pass
-
-        @staticmethod
-        def persistNewProduct(self, **kwargs):
-            pass
-
-        @staticmethod
-        def persistNewCategory():
-            pass
-
-
-    class Retrieval(object):
-        def __init__(self):
-            pass
-
-        @staticmethod
-        def retrieveUser(*args):
-            pass
-
-        @staticmethod
-        def retrieveProduct(*args):
-            pass
-
-        @staticmethod
-        def retrieveCategory(*args):
-            pass
+            self.__connection.commit()
